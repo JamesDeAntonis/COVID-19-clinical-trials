@@ -1,0 +1,88 @@
+how do we manage clinical trial data?
+	dozens a day, free text, how do we make sense?
+	clinical trials.gov is the go-to
+emphasis
+	eligibility criteria
+	mapping words / terms to tags i.e. person, condition
+screening
+	cut the 
+	are eligibility criteria changing over the last six weeks?
+	how do criteria depend on location
+aact trial info ; aggregate analysis of clinical trials data
+	discriminative information about covid
+other file: all the eligibility criteria we have for a given domain
+	person, visit, observation ()
+
+uses 
+	given a small subset of documents, how do you label it
+
+population similarity; not concept similarity
+	two t2 diabetes trials
+		both have same set of concepts BMI, hypertensions, a1c, etc
+		concepts look similar, but thresholds are different so they're looking at two very different populations
+	visualization of results
+		former postdoc did a study on mapping trials onto a map
+		
+
+semantic scholar api
+
+meeting 4/23
+
+ML/DL
+tons of data on eligibility criteria on covid19 trials
+	rules on who can join the clinical trial (i.e. need to have covid, need to be pregnant, not have a compromised liver, etc)
+	clinicaltrials.gov has tons of data but not accessible
+temporal analysis
+	over last two months, how have the criteria changed?
+	have they changed, how has it changed?
+	low level: eligibility criteria, start date -> bin trials into a certain range
+	next level: using the values for measurements
+	high level: patient profiles
+can we start identifying trial competition
+	40 trials in nyc, say they exclude heart disease or liver disease
+	those trials are targeting the same patient population
+with all the data, what can we do to visualize it?
+some info
+	concept: (omac, odyssey) have a common data model which is a gigantic medical dictionary
+		nct_id = clinical trial id (national clinical trial id or something)_ was added for subgroup of clinical trial if there are subgroups
+		eligibility criteria: must have inclusion criteria, can't have exclusion
+		d a child of e, one-to-one d to c
+		negation: 
+		don't use include or negation: they are used for creating is_exclusion
+		don't use concept_group
+		h through j are unnecessary for a analysis, just used to construct the concept
+		before days i.e. no back surgery i last 60 days
+			very large numbers are default when nothing is specified
+		use a, d, e, p are first pass
+		other file: has the date the trial was scheduled to start (column b)
+			phases: 1=can a patient tolerate this?, 2=how high can you dose until someone gets sick?, 3=showing it works (usually this is the kicker, submitted to fda), 4=drugs have been approved and now they're back in research (i.e. hydroxychloroquine)
+		study_type: interventional=we're giving you an intervention, observational=we're calling you to see how you feel, expanded access=giving access to doctors to use outside of its standard care (easier alternative to phase 3 trial), conditions=target condition, intervention, healthy=wheethr healthy volunteers are allowed, zip_codes=zip codes for all facilities that have this trail (important for competition analysis) (pyzipcode is easy to use and to determine nearby zip codes, i.e. list all zip codes within 20 miles)
+			temporal: a, b, d, e, n (den for stratifying temporal analysis by trial characteristic, den are step two columns), i, j, k are all criteria
+			for the location: m
+FOR NEXT WEEK: lowest is a better understanding of what coding will go into BOTH OF THESE projects for an MVP, hopefully some coding
+
+
+
+MVP:
+Temporal Analysis:
+	Fit some nonparametric functions to measure changes in percentage of clinical trials with any given inc/exc + concept criteria OR histogram over a more fine range
+	Patient profiles: deterministic, logic based on concepts, inc/exc, location?
+	
+Geography 
+	Get data on global clinical trial patients and their location and conditions
+	WITHOUT THE ABOVE ^
+		get a matrix of number of overlapping criteria between all pairs of clinical trials, at least those within a certain distance
+		give warnings about which trials are most similar in a nearby distance
+		create a map with plotted clinical trials locations by zip code
+	WITH THE ABOVE
+		show what patient populations have lots of overlap, i.e. competing for the same 40% of the population, show the correlation among different concepts
+
+
+
+
+
+
+
+
+
+
